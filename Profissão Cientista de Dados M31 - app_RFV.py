@@ -63,7 +63,6 @@ def main():
     # Configuração inicial da página da aplicação
         layout="wide",
         initial_sidebar_state='expanded'
-    )
 
     # Título principal da aplicação
     st.write("""# RFV
