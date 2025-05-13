@@ -1,8 +1,6 @@
 import streamlit as st
 st.set_page_config(page_title='RFV', layout='centered')
 
-
-
 # Imports
 import pandas            as pd
 import streamlit         as st
@@ -12,12 +10,12 @@ from datetime            import datetime
 from PIL                 import Image
 from io                  import BytesIO
 
-@st.cache_data
+@st.cache
 def convert_df(df):
     return df.to_csv(index=False).encode('utf-8')
 
 # Função para converter o df para excel
-@st.cache_data
+@st.cache
 def to_excel(df):
     output = BytesIO()
     writer = pd.ExcelWriter(output, engine='xlsxwriter')
@@ -29,10 +27,10 @@ def to_excel(df):
 
 ### Criando os segmentos
 def recencia_class(x, r, q_dict):
-    """Classifica como melhor o menor quartil
+    """Classifica como melhor o menor quartil 
        x = valor da linha,
        r = recencia,
-       q_dict = quartil dicionario
+       q_dict = quartil dicionario   
     """
     if x <= q_dict[r][0.25]:
         return 'A'
@@ -44,10 +42,10 @@ def recencia_class(x, r, q_dict):
         return 'D'
 
 def freq_val_class(x, fv, q_dict):
-    """Classifica como melhor o maior quartil
+    """Classifica como melhor o maior quartil 
        x = valor da linha,
        fv = frequencia ou valor,
-       q_dict = quartil dicionario
+       q_dict = quartil dicionario   
     """
     if x <= q_dict[fv][0.25]:
         return 'D'
@@ -61,14 +59,16 @@ def freq_val_class(x, fv, q_dict):
 # Função principal da aplicação
 def main():
     # Configuração inicial da página da aplicação
+    st.set_page_config(page_title = 'RFV', \
         layout="wide",
         initial_sidebar_state='expanded'
+    )
 
     # Título principal da aplicação
     st.write("""# RFV
 
-    RFV significa recência, frequência, valor e é utilizado para segmentação de clientes baseado no comportamento
-    de compras dos clientes e agrupa eles em clusters parecidos. Utilizando esse tipo de agrupamento podemos realizar
+    RFV significa recência, frequência, valor e é utilizado para segmentação de clientes baseado no comportamento 
+    de compras dos clientes e agrupa eles em clusters parecidos. Utilizando esse tipo de agrupamento podemos realizar 
     ações de marketing e CRM melhores direcionadas, ajudando assim na personalização do conteúdo e até a retenção de clientes.
 
     Para cada cliente é preciso calcular cada uma das componentes abaixo:
@@ -80,7 +80,7 @@ def main():
     E é isso que iremos fazer abaixo.
     """)
     st.markdown("---")
-
+    
     # Apresenta a imagem na barra lateral da aplicação
     # image = Image.open("Bank-Branding.jpg")
     # st.sidebar.image(image)
@@ -95,7 +95,7 @@ def main():
 
         st.write('## Recência (R)')
 
-
+        
         dia_atual = df_compras['DiaCompra'].max()
         st.write('Dia máximo na base de dados: ', dia_atual)
 
@@ -119,7 +119,7 @@ def main():
         df_valor = df_compras[['ID_cliente','ValorTotal']].groupby('ID_cliente').sum().reset_index()
         df_valor.columns = ['ID_cliente','Valor']
         st.write(df_valor.head())
-
+        
 
         st.write('## Tabela RFV final')
         df_RF = df_recencia.merge(df_frequencia, on='ID_cliente')
@@ -142,8 +142,8 @@ def main():
                                                         args=('Frequencia', quartis))
         df_RFV['V_quartil'] = df_RFV['Valor'].apply(freq_val_class,
                                                     args=('Valor', quartis))
-        df_RFV['RFV_Score'] = (df_RFV.R_quartil
-                            + df_RFV.F_quartil
+        df_RFV['RFV_Score'] = (df_RFV.R_quartil 
+                            + df_RFV.F_quartil 
                             + df_RFV.V_quartil)
         st.write(df_RFV.head())
 
@@ -175,4 +175,5 @@ def main():
         st.write(df_RFV['acoes de marketing/crm'].value_counts(dropna=False))
 
 if __name__ == '__main__':
-    main()
+	main()
+    
