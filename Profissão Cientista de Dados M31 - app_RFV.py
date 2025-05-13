@@ -2,6 +2,7 @@ import streamlit as st
 st.set_page_config(page_title='RFV', layout='centered')
 
 
+
 # Imports
 import pandas            as pd
 import streamlit         as st
@@ -11,12 +12,12 @@ from datetime            import datetime
 from PIL                 import Image
 from io                  import BytesIO
 
-@st.cache
+@st.cache_data
 def convert_df(df):
     return df.to_csv(index=False).encode('utf-8')
 
 # Função para converter o df para excel
-@st.cache
+@st.cache_data
 def to_excel(df):
     output = BytesIO()
     writer = pd.ExcelWriter(output, engine='xlsxwriter')
@@ -60,7 +61,6 @@ def freq_val_class(x, fv, q_dict):
 # Função principal da aplicação
 def main():
     # Configuração inicial da página da aplicação
-    st.set_page_config(page_title = 'RFV', \
         layout="wide",
         initial_sidebar_state='expanded'
     )
@@ -177,15 +177,3 @@ def main():
 
 if __name__ == '__main__':
 	main()
-    
-
-
-
-
-
-
-
-
-
-
-
