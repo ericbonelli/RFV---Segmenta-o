@@ -58,11 +58,6 @@ def freq_val_class(x, fv, q_dict):
 
 # Função principal da aplicação
 def main():
-    # Configuração inicial da página da aplicação
-    st.set_page_config(page_title = 'RFV', \
-        layout="wide",
-        initial_sidebar_state='expanded'
-    )
 
     # Título principal da aplicação
     st.write("""# RFV
