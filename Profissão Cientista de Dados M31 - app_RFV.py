@@ -10,12 +10,12 @@ from datetime            import datetime
 from PIL                 import Image
 from io                  import BytesIO
 
-@st.cache_data_data
+@st.cache_data
 def convert_df(df):
     return df.to_csv(index=False).encode('utf-8')
 
 # Função para converter o df para excel
-@st.cache_data_data
+@st.cache_data
 def to_excel(df):
     output = BytesIO()
     writer = pd.ExcelWriter(output, engine='xlsxwriter')
