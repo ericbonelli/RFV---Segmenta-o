@@ -1,3 +1,5 @@
+st.set_page_config(page_title='RFV', layout='centered')
+
 
 # Imports
 import pandas            as pd
@@ -175,6 +177,14 @@ def main():
 if __name__ == '__main__':
 	main()
     
+
+
+
+
+
+
+
+
 
 
 
